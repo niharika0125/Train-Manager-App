@@ -1,26 +1,48 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TrainConsistApp {
+
+    // Bogie class with name and capacity
+    static class Bogie {
+        String name;
+        int capacity;
+
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+
+        @Override
+        public String toString() {
+            return name + " (" + capacity + " seats)";
+        }
+    }
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Create a HashMap to store bogie names and their capacities
-        Map<String, Integer> bogieCapacityMap = new HashMap<>();
+        // Create a list to store passenger bogies
+        List<Bogie> passengerBogies = new ArrayList<>();
+        passengerBogies.add(new Bogie("Sleeper", 72));
+        passengerBogies.add(new Bogie("AC Chair", 54));
+        passengerBogies.add(new Bogie("First Class", 36));
+        passengerBogies.add(new Bogie("Executive", 80));
 
-        // Insert bogies with their seating/load capacities
-        bogieCapacityMap.put("Sleeper", 72);      // 72 seats
-        bogieCapacityMap.put("AC Chair", 54);     // 54 seats
-        bogieCapacityMap.put("First Class", 36);  // 36 seats
+        System.out.println("\nOriginal Passenger Bogies:");
+        System.out.println(passengerBogies);
 
-        // Iterate over the map and display bogie capacities
-        System.out.println("\nBogie Capacities:");
-        for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue() + " seats");
-        }
+        // Filter bogies with capacity greater than 60
+        List<Bogie> highCapacityBogies = passengerBogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        System.out.println("\nSystem maps each bogie to its capacity successfully.");
+        System.out.println("\nFiltered Passenger Bogies (capacity > 60):");
+        System.out.println(highCapacityBogies);
+
+        System.out.println("\nOriginal list remains unchanged:");
+        System.out.println(passengerBogies);
     }
 }
