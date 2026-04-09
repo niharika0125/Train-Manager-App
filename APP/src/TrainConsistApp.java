@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.Comparator;
 
 public class TrainConsistApp {
 
@@ -26,23 +26,21 @@ public class TrainConsistApp {
 
         // Create a list to store passenger bogies
         List<Bogie> passengerBogies = new ArrayList<>();
+
+        // Add bogies with their seating capacities
         passengerBogies.add(new Bogie("Sleeper", 72));
         passengerBogies.add(new Bogie("AC Chair", 54));
         passengerBogies.add(new Bogie("First Class", 36));
-        passengerBogies.add(new Bogie("Executive", 80));
 
-        System.out.println("\nOriginal Passenger Bogies:");
+        System.out.println("\nPassenger Bogies (unsorted):");
         System.out.println(passengerBogies);
 
-        // Filter bogies with capacity greater than 60
-        List<Bogie> highCapacityBogies = passengerBogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // Sort bogies by capacity using Comparator
+        passengerBogies.sort(Comparator.comparingInt(b -> b.capacity));
 
-        System.out.println("\nFiltered Passenger Bogies (capacity > 60):");
-        System.out.println(highCapacityBogies);
-
-        System.out.println("\nOriginal list remains unchanged:");
+        System.out.println("\nPassenger Bogies sorted by capacity (ascending):");
         System.out.println(passengerBogies);
+
+        System.out.println("\nSystem successfully sorts bogies based on seating capacity.");
     }
 }
