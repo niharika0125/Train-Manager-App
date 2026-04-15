@@ -1,46 +1,46 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.stream.Collectors;
+
+class Bogie {
+    String type;
+    int capacity;
+
+    Bogie(String type, int capacity) {
+        this.type = type;
+        this.capacity = capacity;
+    }
+
+    public String toString() {
+        return type + "(" + capacity + ")";
+    }
+}
 
 public class TrainConsistApp {
 
-    // Bogie class with name and capacity
-    static class Bogie {
-        String name;
-        int capacity;
-
-        Bogie(String name, int capacity) {
-            this.name = name;
-            this.capacity = capacity;
-        }
-
-        @Override
-        public String toString() {
-            return name + " (" + capacity + " seats)";
-        }
-    }
-
     public static void main(String[] args) {
 
-        System.out.println("=== Train Consist Management App ===");
-
-        // Create a list to store passenger bogies
+        // Create list (reuse from UC7)
         List<Bogie> passengerBogies = new ArrayList<>();
 
-        // Add bogies with their seating capacities
         passengerBogies.add(new Bogie("Sleeper", 72));
         passengerBogies.add(new Bogie("AC Chair", 54));
         passengerBogies.add(new Bogie("First Class", 36));
+        passengerBogies.add(new Bogie("Executive", 80));
 
-        System.out.println("\nPassenger Bogies (unsorted):");
+        System.out.println("Original Passenger Bogies:");
         System.out.println(passengerBogies);
 
-        // Sort bogies by capacity using Comparator
-        passengerBogies.sort(Comparator.comparingInt(b -> b.capacity));
+        // UC8: Filtering using Stream
+        List<Bogie> filteredBogies = passengerBogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        System.out.println("\nPassenger Bogies sorted by capacity (ascending):");
+        System.out.println("\nFiltered Bogies (capacity > 60):");
+        System.out.println(filteredBogies);
+
+        // Verify original list unchanged
+        System.out.println("\nOriginal List After Filtering:");
         System.out.println(passengerBogies);
-
-        System.out.println("\nSystem successfully sorts bogies based on seating capacity.");
     }
 }
