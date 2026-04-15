@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 class Bogie {
@@ -11,6 +12,10 @@ class Bogie {
         this.capacity = capacity;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public String toString() {
         return type + "(" + capacity + ")";
     }
@@ -20,27 +25,26 @@ public class TrainConsistApp {
 
     public static void main(String[] args) {
 
-        // Create list (reuse from UC7)
-        List<Bogie> passengerBogies = new ArrayList<>();
+        // Create bogie list
+        List<Bogie> bogies = new ArrayList<>();
 
-        passengerBogies.add(new Bogie("Sleeper", 72));
-        passengerBogies.add(new Bogie("AC Chair", 54));
-        passengerBogies.add(new Bogie("First Class", 36));
-        passengerBogies.add(new Bogie("Executive", 80));
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 54));
+        bogies.add(new Bogie("Sleeper", 70));
+        bogies.add(new Bogie("First Class", 36));
+        bogies.add(new Bogie("AC Chair", 60));
 
-        System.out.println("Original Passenger Bogies:");
-        System.out.println(passengerBogies);
+        System.out.println("Original Bogie List:");
+        System.out.println(bogies);
 
-        // UC8: Filtering using Stream
-        List<Bogie> filteredBogies = passengerBogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // UC9: Grouping using Stream
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(Bogie::getType));
 
-        System.out.println("\nFiltered Bogies (capacity > 60):");
-        System.out.println(filteredBogies);
+        System.out.println("\nGrouped Bogies:");
 
-        // Verify original list unchanged
-        System.out.println("\nOriginal List After Filtering:");
-        System.out.println(passengerBogies);
+        groupedBogies.forEach((type, list) -> {
+            System.out.println(type + " -> " + list);
+        });
     }
 }
