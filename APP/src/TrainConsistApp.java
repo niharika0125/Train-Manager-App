@@ -1,41 +1,35 @@
-import java.util.List;
-import java.util.ArrayList;
-
-class Bogie {
-    String type;
-    int capacity;
-
-    Bogie(String type, int capacity) {
-        this.type = type;
-        this.capacity = capacity;
-    }
-
-    public String toString() {
-        return type + "(" + capacity + ")";
-    }
-}
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class TrainConsistApp {
 
     public static void main(String[] args) {
 
-        // Create bogie list
-        List<Bogie> bogies = new ArrayList<>();
+        // Sample inputs (you can later replace with Scanner)
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 54));
-        bogies.add(new Bogie("First Class", 36));
-        bogies.add(new Bogie("Executive", 80));
+        // Regex patterns
+        String trainIdRegex = "TRN-\\d{4}";
+        String cargoRegex = "PET-[A-Z]{2}";
 
-        System.out.println("Bogie List:");
-        System.out.println(bogies);
+        // Compile patterns
+        Pattern trainPattern = Pattern.compile(trainIdRegex);
+        Pattern cargoPattern = Pattern.compile(cargoRegex);
 
-        // UC10: Total seat calculation using reduce
-        int totalSeats = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
+        // Create matchers
+        Matcher trainMatcher = trainPattern.matcher(trainId);
+        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
 
-        System.out.println("\nTotal Seating Capacity:");
-        System.out.println(totalSeats);
+        // Validate
+        boolean isTrainValid = trainMatcher.matches();
+        boolean isCargoValid = cargoMatcher.matches();
+
+        // Output
+        System.out.println("Train ID: " + trainId);
+        System.out.println("Is Train ID Valid? " + isTrainValid);
+
+        System.out.println("\nCargo Code: " + cargoCode);
+        System.out.println("Is Cargo Code Valid? " + isCargoValid);
     }
 }
